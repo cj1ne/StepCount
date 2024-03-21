@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.health.connect)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.google.material)
 
