@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StepCount</string>
+    <string name="permissions_rationale_message">StepCount는 오늘의 걸음 수 기능을 제공하기 위해 사용자의 걸음 수 읽기 권한을 요청합니다.</string>
+    <string name="permissions_rationale_title">개인정보처리방침</string>
 </resources>
