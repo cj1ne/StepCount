@@ -1,5 +1,15 @@
 <resources>
+    <string name="activity_not_found_error_message">요청하신 작업을 실행할 수 있는 앱이 없습니다.</string>
     <string name="app_name">StepCount</string>
+    <string name="app_unavailable_message">StepCount는 해당 기기를 지원하지 않습니다.</string>
+    <string name="approve">승인하기</string>
+    <string name="approve_completed">승인완료</string>
+    <string name="confirm">확인</string>
+    <string name="health_connect_read_steps_permission_description">헬스 커넥트 걸음 수 읽기 권한</string>
+    <string name="health_connect_setting_description">헬스 커넥트 설정</string>
+    <string name="install">설치하기</string>
     <string name="permissions_rationale_message">StepCount는 오늘의 걸음 수 기능을 제공하기 위해 사용자의 걸음 수 읽기 권한을 요청합니다.</string>
     <string name="permissions_rationale_title">개인정보처리방침</string>
+    <string name="settings_completed">설정완료</string>
+    <string name="step">걸음</string>
 </resources>
