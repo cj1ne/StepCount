@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/step_count_widget_description"
+    android:initialKeyguardLayout="@layout/step_count_app_widget"
+    android:initialLayout="@layout/step_count_app_widget"
+    android:minWidth="110dp"
+    android:minHeight="40dp"
+    android:previewImage="@drawable/ic_step_count_app_widget_preview"
+    android:previewLayout="@layout/step_count_app_widget"
+    android:resizeMode="horizontal"
+    android:targetCellWidth="2"
+    android:targetCellHeight="1"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen" />

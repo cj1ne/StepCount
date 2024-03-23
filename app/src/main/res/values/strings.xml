@@ -12,4 +12,6 @@
     <string name="permissions_rationale_title">개인정보처리방침</string>
     <string name="settings_completed">설정완료</string>
     <string name="step">걸음</string>
+    <string name="step_count_widget_description">오늘의 걸음 수</string>
+    <string name="step_count_widget_label">걸음 수 측정기</string>
 </resources>
