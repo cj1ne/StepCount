@@ -8,6 +8,7 @@
     <string name="health_connect_read_steps_permission_description">헬스 커넥트 걸음 수 읽기 권한</string>
     <string name="health_connect_setting_description">헬스 커넥트 설정</string>
     <string name="install">설치하기</string>
+    <string name="notification_default_channel_name">걸음 수 알림</string>
     <string name="permissions_rationale_message">StepCount는 오늘의 걸음 수 기능을 제공하기 위해 사용자의 걸음 수 읽기 권한을 요청합니다.</string>
     <string name="permissions_rationale_title">개인정보처리방침</string>
     <string name="settings_completed">설정완료</string>

@@ -1,5 +1,6 @@
 package com.glen.stepcount.ui.main
 
+import android.Manifest
 import android.content.Intent
 import android.health.connect.HealthConnectManager
 import android.net.Uri
@@ -8,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Process
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.app.NotificationManagerCompat
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.StepsRecord
@@ -31,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
+    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+    }
+
     @Inject
     lateinit var healthConnectClient: Lazy<HealthConnectClient>
 
@@ -42,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         setUpStepCountView()
         setUpSettingsView()
         setUpPermissionView()
+        requestNotificationPermission()
     }
 
     private fun setUpStepCountView() {
@@ -113,6 +120,12 @@ class MainActivity : AppCompatActivity() {
                 granted.contains(HealthPermission.getReadPermission(StepsRecord::class))
             )
         }
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (NotificationManagerCompat.from(this).areNotificationsEnabled()) return
+        permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
     private fun showHealthConnectPermissionSettings() {
