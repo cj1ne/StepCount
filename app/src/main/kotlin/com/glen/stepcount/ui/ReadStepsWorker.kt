@@ -31,6 +31,18 @@ class ReadStepsWorker @AssistedInject constructor(
 
     private var stepCount = 0L
 
+    /**
+     * 앱이 Foreground 상태인 경우에만 걸음 수를 조회할 수 있으므로 ForegroundService를 실행하고
+     * [READ_INTERVAL]마다 걸음 수를 조회하여 위젯 업데이트 및 알림 노출.
+     *
+     * 헬스 커넥트 비활성화, 걸음 수 권한 거부 등으로 인해 걸음 수 조회 결과가 [StepsRecord.Unavailable]인 경우 종료.
+     *
+     * 헬스 커넥트는 rate limit이 있어서 해당 기준을 초과하여 조회를 요청하는 경우 Exception 발생 가능.
+     *
+     * https://developer.android.com/health-and-fitness/guides/health-connect/plan/rate-limiting
+     *
+     * @return [ListenableWorker.Result]
+     */
     override suspend fun doWork(): Result {
         setForeground(getForegroundInfo())
         do {
@@ -59,6 +71,11 @@ class ReadStepsWorker @AssistedInject constructor(
         )
     }
 
+    /**
+     * 신규로 조회한 걸음 수와 마지막으로 조회한 걸음 수의 백단위 절사가 다른 경우 알림 노출.
+     *
+     * @param stepsRecord 신규 걸음 수 조회 결과
+     */
     private fun updateStepCount(stepsRecord: StepsRecord) {
         stepCount = when (stepsRecord) {
             is StepsRecord.Available -> {

@@ -27,6 +27,14 @@ class HealthRepositoryImpl @Inject constructor(
         return stepsRecordState
     }
 
+    /**
+     * 시작 시간과 끝 시간 사이의 걸음 수를 조회하여 반환.
+     * 조회한 데이터는 앱 내에서 공유할 수 있도록 StateFlow에 저장.
+     *
+     * @param startTime 걸음 수 조회 시작 시간
+     * @param endTime 걸음 수 조회 끝 시간
+     * @return [StepsRecord]
+     */
     override suspend fun fetchStepsRecord(startTime: Instant, endTime: Instant): StepsRecord {
         val stepsRecord = healthDataSource.getSteps(startTime, endTime).map {
             StepsRecord.Available(startTime, endTime, it)

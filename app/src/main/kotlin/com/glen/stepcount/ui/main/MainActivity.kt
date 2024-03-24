@@ -108,6 +108,15 @@ class MainActivity : AppCompatActivity() {
         checkHealthConnect()
     }
 
+    /**
+     * 헬스 커넥트 SDK 사용 가능 여부 확인.
+     *
+     * [HealthConnectClient] 인스턴스는 [HealthConnectClient.SDK_AVAILABLE]인 경우에만 생성할 수 있으므로
+     * Status가 [HealthConnectClient.SDK_AVAILABLE]인 경우에만 권한 여부 확인.
+     *
+     * Status가 [HealthConnectClient.SDK_UNAVAILABLE]인 경우 앱의 기능을 사용할 수 없으므로 미지원 다이얼로그 노출.
+     *
+     */
     private fun checkHealthConnect() {
         val status = HealthConnectClient.getSdkStatus(this)
         viewModel.onUpdateHealthConnectStatus(status == HealthConnectClient.SDK_AVAILABLE)
@@ -117,6 +126,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 걸음 수 읽기 권한을 확인하여 권한이 허용된 경우 실시간 걸음 수 데이터 연동을 위해 [ReadStepsWorker]를 실행.
+     *
+     */
     private fun checkPermission() {
         lifecycleScope.launch {
             val granted = healthConnectClient.get().permissionController.getGrantedPermissions()
@@ -144,6 +157,12 @@ class MainActivity : AppCompatActivity() {
         permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
+    /**
+     * 걸음 수 읽기 권한을 변경하기 위해 헬스 커넥트 권한 설정 화면 실행.
+     *
+     * 헬스 커넥트 SDK에서 Permission launcher를 제공하고 있지만 해당 launcher를 실행하여 진입한 화면에서
+     * 취소 버튼을 여러 번 클릭한 경우 launcher 재실행 시 아무런 동작을 하지 않아 권한 설정 화면으로 이동하도록 처리.
+     */
     private fun showHealthConnectPermissionSettings() {
         val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             Intent(HealthConnectManager.ACTION_MANAGE_HEALTH_PERMISSIONS)
