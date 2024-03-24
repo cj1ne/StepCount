@@ -18,8 +18,12 @@ import androidx.health.connect.client.records.StepsRecord
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.glen.stepcount.R
 import com.glen.stepcount.databinding.ActivityMainBinding
+import com.glen.stepcount.ui.ReadStepsWorker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
@@ -116,10 +120,22 @@ class MainActivity : AppCompatActivity() {
     private fun checkPermission() {
         lifecycleScope.launch {
             val granted = healthConnectClient.get().permissionController.getGrantedPermissions()
-            viewModel.onUpdateReadStepsPermission(
-                granted.contains(HealthPermission.getReadPermission(StepsRecord::class))
-            )
+            val hasPermission = granted.contains(HealthPermission.getReadPermission(StepsRecord::class))
+            viewModel.onUpdateReadStepsPermission(hasPermission)
+            if (hasPermission) {
+                enqueueReadStepsWork()
+            }
         }
+    }
+
+    private fun enqueueReadStepsWork() {
+        val readStepsWork = OneTimeWorkRequestBuilder<ReadStepsWorker>().build()
+        WorkManager.getInstance(applicationContext)
+            .enqueueUniqueWork(
+                "readSteps",
+                ExistingWorkPolicy.KEEP,
+                readStepsWork
+            )
     }
 
     private fun requestNotificationPermission() {
